@@ -1,0 +1,58 @@
+{% extends "shared/_base.html" %}
+
+{% block content %}
+<div class="container">
+  <!-- Employee, Employer Section -->
+  <div id="employee-employer" class="clickable-jumbotron mt-4 p-5 bg-primary rounded text-white d-flex justify-content-center align-items-center">
+    <h1>Employee, Employer</h1>
+  </div>
+
+  <!-- JOB Seeker Section -->
+  <div id="job-seeker" class="clickable-jumbotron mt-4 p-5 bg-secondary rounded text-white d-flex justify-content-center align-items-center">
+    <h1>JOB Seeker</h1>
+  </div>
+
+  <!-- Employee, Employer Form -->
+  <div id="employee-employer-form" class="mt-4 p-5 bg-light rounded" style="display: none;">
+    <h2>Employee, Employer Form</h2>
+    <form method="post" action="">
+      {% csrf_token %}
+      {{ form.as_p}}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- JOB Seeker Form -->
+  <div id="job-seeker-form" class="mt-4 p-5 bg-light rounded" style="display: none;">
+    <h2>Job Seeker Form</h2>
+    <form method="post" action="">
+      {% csrf_token %}
+      {% comment %} <div class="mb-3">
+        <label for="job-field" class="form-label">Job Field</label>
+        <input type="text" class="form-control" id="job-field" name="job_field" required>
+      </div>
+      <div class="mb-3">
+        <label for="experience" class="form-label">Experience</label>
+        <input type="number" class="form-control" id="experience" name="experience" required>
+      </div> {% endcomment %}
+      {{form.as_p}}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% block scripts %}
+<script>
+  document.getElementById('employee-employer').addEventListener('click', function() {
+    document.getElementById('employee-employer-form').style.display = 'block';
+    document.getElementById('job-seeker-form').style.display = 'none';
+  });
+
+  document.getElementById('job-seeker').addEventListener('click', function() {
+    document.getElementById('job-seeker-form').style.display = 'block';
+    document.getElementById('employee-employer-form').style.display = 'none';
+  });
+</script>      
+{% endblock scripts %}
+
+{% endblock %}

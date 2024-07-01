@@ -1,0 +1,10 @@
+{% extends "shared/_base.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{form.as_p}}
+    {% csrf_token %}
+    <button class="btn btn-secondary" type="submit">Login</button>
+</form>
+
+{% endblock content %}
