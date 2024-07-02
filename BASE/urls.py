@@ -4,7 +4,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/',include('U_Auth.urls')),
-    path('',include('Dating.urls')),
+    path('',include('U_Auth.urls')),
+    path('dating/',include('Dating.urls')),
 ]
 

@@ -8,6 +8,9 @@ from django.views.generic import View, TemplateView, ListView, CreateView, Updat
 
 from .forms import LoginForm,UserForm,EmployeeEmployerForm,Address,AddressUpsertForm
 
+class Demo(TemplateView):
+    template_name = 'U_Auth/signup.html'
+
 
 class LoginView(View):
     def get(self, request):
