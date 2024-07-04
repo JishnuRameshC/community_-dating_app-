@@ -41,6 +41,8 @@ class User(AbstractUser):
     smoke = models.CharField(max_length=1,choices=SMOKE,default='N')
     drinking = models.CharField(max_length=1,choices=DRINKING,default='T')
     rel_status = models.CharField(max_length=1, choices=REL_STATAS,default='S')
+    profile_pic = models.ImageField(upload_to='profile_pics', blank=True, null=True)
+    
 
     @property
     def full_name(self):
@@ -49,6 +51,12 @@ class User(AbstractUser):
     def __str__(self) -> str:
         return self.username
     
+    
+class ProfilePic(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    profile_pic = models.ImageField(upload_to='profile_pics', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Address(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -76,6 +84,7 @@ class Address(models.Model):
             {self.country}
         '''
     
+
 class EmployeeEmployer(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -85,6 +94,7 @@ class EmployeeEmployer(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.company_name}"
+
 
 class JobSeeker(models.Model):
     id = models.BigAutoField(primary_key=True)

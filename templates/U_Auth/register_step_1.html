@@ -38,29 +38,6 @@
                     {{ form.last_name.label }}
                     {{ form.last_name}}
                   </div>
-                  <div class="col-md-4">
-                    {{ form.username.label }}
-                    <div class="input-group has-validation">
-                      <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        {{ form.username }}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    {{ form.email.label }}
-                    {{ form.email}}
-                </div>
-                  <div class="col-md-6">
-                    {{form.phone.label}}
-                    {{ form.phone }}
-                </div>
-                  <div class="col-md-6">
-                    {{form.password1.label}}
-                    {{form.password1}}
-                  </div>
-                  <div class="col-md-6">
-                    {{form.password2.label}}
-                    {{ form.password2 }}
-                </div>
                   <div class="col-md-3">
                     {{ form.dob.label}}
                     {{ form.dob }}
@@ -76,6 +53,10 @@
                   <div class="col-md-3">
                     {{ form.gender.label}}
                     {{ form.gender }}
+                  </div>
+                  <div class="col-md-3">
+                    {{ form.profile_pic.label}}
+                    {{ form.profile_pic }}
                   </div>
                   {% csrf_token %}
                   <div class="col-12">

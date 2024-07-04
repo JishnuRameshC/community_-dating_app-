@@ -6,10 +6,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, TemplateView, ListView, CreateView, UpdateView
 
-from .forms import LoginForm,UserForm,EmployeeEmployerForm,Address,AddressUpsertForm
-
-class Demo(TemplateView):
-    template_name = 'U_Auth/signup.html'
+from .forms import LoginForm,UserForm,EmployeeEmployerForm,Address,AddressUpsertForm,SignUpForm
+from .models import User
 
 
 class LoginView(View):
@@ -30,12 +28,33 @@ class LoginView(View):
                 return redirect('/')
 
         return render(request, 'U_Auth/login.html', {'form': form})
-    
+  
 
-class RegisterPage1View(CreateView):
+class SignUpView(CreateView):
+    form_class = SignUpForm
+    template_name = 'U_Auth/signup.html'
+    success_url = ('register')
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password1'])
+        user.save()
+        login(self.request, user)
+        print(f"User {user.username} logged in successfully")
+        return super().form_valid(form)
+
+
+class RegisterPage1View(LoginRequiredMixin, CreateView):
     form_class = UserForm
-    success_url = reverse_lazy("register2")
-    template_name = "U_Auth/register_step_1.html"
+    template_name = 'U_Auth/register_step_2.html'
+    success_url = reverse_lazy('register2')
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        return response
 
 
 class RegisterPage2View(CreateView):

@@ -12,7 +12,7 @@ from django.forms import (
     DateField,
     DateInput,
     Select,
-    Form
+    Form,
 )
 
 
@@ -21,18 +21,9 @@ class LoginForm(Form):
     password = CharField(widget=PasswordInput)
 
 
-class UserForm(UserCreationForm):
-    first_name = CharField(
-        label=("First Name"),
-        max_length=30,
-        required=False,
-        widget=TextInput(attrs={"class": "form-control"}),
-    )
-    last_name = CharField(
-        label=("Last Name"),
-        max_length=30,
-        required=False,
-        widget=TextInput(attrs={"class": "form-control"}),
+class SignUpForm(UserCreationForm):
+    username = CharField(
+        label="username", widget=TextInput(attrs={"class": "form-control"})
     )
     password1 = CharField(
         label=("Password"),
@@ -48,10 +39,6 @@ class UserForm(UserCreationForm):
             attrs={"autocomplete": "new-password", "class": "form-control"}
         ),
     )
-
-    username = CharField(
-        label="username", widget=TextInput(attrs={"class": "form-control"})
-    )
     email = CharField(
         min_length=5,
         max_length=50,
@@ -60,6 +47,46 @@ class UserForm(UserCreationForm):
         validators=[EmailValidator()],
         widget=TextInput(attrs={"class": "form-control"}),
     )
+    phone = CharField(
+        min_length=9,
+        max_length=15,
+        label="Phone", required=False, widget=TextInput(attrs={"class": "form-control"})
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "phone", "password1", "password2"]
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Username already exists.")
+        return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords do not match.")
+        return cleaned_data
+
+
+class UserForm(ModelForm):
+    first_name = CharField(
+        label="First Name",
+        max_length=30,
+        required=False,
+        widget=TextInput(attrs={"class": "form-control"}),
+    )
+    last_name = CharField(
+        label="Last Name",
+        max_length=30,
+        required=False,
+        widget=TextInput(attrs={"class": "form-control"}),
+    )
+
     dob = DateField(
         label="Date of Birth",
         required=False,
@@ -73,11 +100,6 @@ class UserForm(UserCreationForm):
             choices=[("M", "Male"), ("F", "Female"), ("O", "Other")],
             attrs={"class": "form-select"},
         ),
-    )
-    phone = CharField(
-        label="Phone",
-        required=False,
-        widget=TextInput(attrs={"class": "form-control"}),
     )
     smoke = CharField(
         label="Smoke",
@@ -114,16 +136,13 @@ class UserForm(UserCreationForm):
         fields = [
             "first_name",
             "last_name",
-            "username",
-            "email",
-            "password1",
-            "password2",
             "dob",
             "gender",
             "phone",
             "smoke",
             "drinking",
             "rel_status",
+            "profile_pic",
         ]
 
 
