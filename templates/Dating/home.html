@@ -26,14 +26,14 @@
 {% block content %}
 <h1>Welcome to the Dating Site</h1>
     <div class="grid-container">
-        {% for user in users %}
+        {% for user in object_list %}
         <div class="grid-item">
             {% if user.profile_pics.exists %}
                 <img src="{{ user.profile_pics.first.profile_pic.url }}" alt="{{ user.username }}'s profile picture" class="profile-pic">
             {% else %}
                  <img src="{% static 'img/default_profile_pic.jpg' %}" alt="Default profile picture" class="profile-pic">
             {% endif %}
-            <h2>{{ user.username }}</h2>
+            ({{ user.username }})
             <p>{{ user.get_gender_display }}</p>
             <p>Dob : {{user.dob}}</p>
             <p>{{ user.get_rel_status_display }}</p>

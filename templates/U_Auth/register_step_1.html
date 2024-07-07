@@ -8,13 +8,13 @@
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="#" class="d-block w-100" alt="...">
                   </div>
                   <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="#" class="d-block w-100" alt="...">
                   </div>
                   <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
+                    <img src="#" class="d-block w-100" alt="...">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -28,34 +28,34 @@
               </div>
         </div> 
         <div class="col gap-3">
-            <section class="container my-3 bg-dark text-light py-4 ">
-                <form class="row g-3" method="post"  >
+            <section class="container my-3 bg-dark text-light py-4">
+                <form class="row g-3" method="post" enctype="multipart/form-data">
                   <div class="col-md-4">
                     {{ form.first_name.label }}
-                    {{ form.first_name}}
+                    {{ form.first_name }}
                   </div>
                   <div class="col-md-4">
                     {{ form.last_name.label }}
-                    {{ form.last_name}}
+                    {{ form.last_name }}
                   </div>
                   <div class="col-md-3">
-                    {{ form.dob.label}}
+                    {{ form.dob.label }}
                     {{ form.dob }}
-                </div>
-                  <div class="col-md-3">
-                    {{ form.smoke.label}}
-                    {{ form.smoke}}
                   </div>
                   <div class="col-md-3">
-                    {{ form.drinking.label}}
-                    {{ form.drinking}}
+                    {{ form.smoke.label }}
+                    {{ form.smoke }}
                   </div>
                   <div class="col-md-3">
-                    {{ form.gender.label}}
+                    {{ form.drinking.label }}
+                    {{ form.drinking }}
+                  </div>
+                  <div class="col-md-3">
+                    {{ form.gender.label }}
                     {{ form.gender }}
                   </div>
                   <div class="col-md-3">
-                    {{ form.profile_pic.label}}
+                    {{ form.profile_pic.label }}
                     {{ form.profile_pic }}
                   </div>
                   {% csrf_token %}
@@ -70,9 +70,8 @@
                     <button class="btn btn-primary align-self-center" type="submit">Submit form</button>
                   </div>
                 </form>
-              </section>
+            </section>
         </div>
     </div>
 </div>
-
 {% endblock %}

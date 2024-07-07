@@ -33,7 +33,7 @@ class LoginView(View):
 class SignUpView(CreateView):
     form_class = SignUpForm
     template_name = 'U_Auth/signup.html'
-    success_url = ('register')
+    success_url = reverse_lazy('register')
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -41,16 +41,22 @@ class SignUpView(CreateView):
         user.save()
         login(self.request, user)
         print(f"User {user.username} logged in successfully")
-        return super().form_valid(form)
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return self.success_url
 
 
 class RegisterPage1View(LoginRequiredMixin, CreateView):
+    model = User
     form_class = UserForm
-    template_name = 'U_Auth/register_step_2.html'
+    template_name = 'U_Auth/register_step_1.html'
     success_url = reverse_lazy('register2')
 
-    def get_object(self):
-        return self.request.user
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)

@@ -50,7 +50,7 @@ class SignUpForm(UserCreationForm):
     phone = CharField(
         min_length=9,
         max_length=15,
-        label="Phone", required=False, widget=TextInput(attrs={"class": "form-control"})
+        label="Phone", required=True, widget=TextInput(attrs={"class": "form-control"})
     )
 
     class Meta:
